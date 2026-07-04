@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./assets/logo.png" alt="Logo Backlogging" width="120">
+    <img src="./frontend-api/public/favicon.png" alt="Logo Backlogging" width="120">
     <h1 align="center">Backlogging</h1>
 </p>
 
