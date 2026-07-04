@@ -1,0 +1,24 @@
+{
+  "name": "backlogging-api",
+  "version": "1.0.0",
+  "description": "API responsável pela comunicação entre o back-end e o front-end",
+  "homepage": "https://github.com/siqueira2009/backlogging#readme",
+  "bugs": {
+    "url": "https://github.com/siqueira2009/backlogging/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siqueira2009/backlogging.git"
+  },
+  "license": "MIT",
+  "author": "Lucas Siqueira",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "pg": "^8.22.0"
+  }
+}

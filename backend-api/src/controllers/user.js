@@ -1,0 +1,61 @@
+// Importação dos serviços e funções utilitárias
+import * as services from '../services/user.js';
+import * as errorUtils from '../utils/errors.js'; 
+
+// Função de pegar usuário
+export async function getUser(req, res) {
+    try { // Primeiro tenta...
+        const id = req.params.id; // Pegar o ID dos parâmetros
+        const response = await services.getUser(id); // Esperar resposta dos serviços
+
+        res.json({response: response}); // Devolver essa resposta
+    } catch (error) { // Em caso de erro...
+        const errorMessage = errorUtils.errorMessages(error, req); // Gera mensagem de erro usando a função utilitária
+
+        // Printa e devolve esse erro
+        console.error(errorMessage);
+        res.json(errorMessage);
+    }
+}
+
+// Função de postar usuário
+export async function postUser(req, res) {
+    try {
+        const body = req.body;
+        const response = await services.postUser();
+
+        res.json({response: response});
+    } catch (error) {
+        const errorMessage = errorUtils.errorMessages(error, req);
+        console.error(errorMessage);
+        res.json(errorMessage);
+    }
+}
+
+// Função de deletar usuário
+export async function deleteUser(req, res) {
+    try {
+        const id = req.params.id;
+        const response = services.deleteUser(id);
+
+        res.json({response: response});
+    } catch (error) {
+        const errorMessage = errorUtils.errorMessages(error, req);
+        console.error(errorMessage);
+        res.json(errorMessage)
+    }
+}
+
+// Função de atualizar usuário
+export async function putUser(req, res) {
+    try {
+        const id = req.params.id;
+        const response = services.putUser(id);
+
+        res.json({response: response});
+    } catch (error) {
+        const errorMessage = errorUtils.errorMessages(error, req);
+        console.error(errorMessage);
+        res.json(errorMessage)
+    }
+}
