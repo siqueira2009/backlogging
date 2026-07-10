@@ -3,16 +3,16 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './App.css';
 
-import HomeScreen from "./screens/Home";
-import AboutScreen from "./screens/About";
+import SignIn from "./screens/SignIn/SignIn";
+import SignUp from "./screens/SignUp";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/home" element={<HomeScreen />} />
-        <Route path="/about" element={<AboutScreen />} />
-      </Routes>
+        <Route path="/login" element={<SignIn />} />
+        <Route path="/create" element={<SignUp />} />
+       </Routes>
     </BrowserRouter>
   );
 }
