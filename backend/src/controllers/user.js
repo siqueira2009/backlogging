@@ -64,7 +64,7 @@ export async function loginUser(req, res) {
 export async function deleteUser(req, res) {
     try {
         const id = req.params.id;
-        const response = services.deleteUser(id);
+        const response = await services.deleteUser(id);
 
         res.json({response: response});
     } catch (error) {
@@ -78,7 +78,7 @@ export async function deleteUser(req, res) {
 export async function putUser(req, res) {
     try {
         const id = req.params.id;
-        const response = services.putUser(id);
+        const response = await services.putUser(id);
 
         res.json({response: response});
     } catch (error) {

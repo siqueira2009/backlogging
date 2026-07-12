@@ -38,3 +38,14 @@ export async function create_user(client, userData) {
 
     return res.rows[0].id;
 }
+
+export async function delete_user(client, id) {
+    const query = `
+        DELETE FROM users WHERE id = $1
+        RETURNING id
+    `
+
+    const res = await client.query(query, [id]);
+
+    return res.rowCount > 0;
+}

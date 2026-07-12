@@ -103,8 +103,30 @@ export async function loginUser(body) {
 }
 
 // Função de deletar usuário
-export function deleteUser(id) {
-    return `DELETE in /user with ID ${id}`;
+export async function deleteUser(id) {
+    let client;
+
+    try {
+        client = await pool.connect();
+
+        await client.query('BEGIN');
+
+        const deleted = await userQueries.delete_user(client, id);
+
+        await client.query('COMMIT');
+
+        return deleted;
+    } catch (error) {
+        if (client) {
+            await client.query('ROLLBACK');
+        }
+
+        throw error;
+    } finally {
+        if (client) {
+            await client.release();
+        }
+    }
 }
 
 // Função de atualizar usuário
