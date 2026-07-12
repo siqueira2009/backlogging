@@ -8,6 +8,16 @@ export async function get_user(client, id) {
     return res.rows[0];
 }
 
+export async function get_users(client) {
+    const query = `
+        SELECT id, name, email, gametype, steam_id FROM users;
+    `
+
+    const res = await client.query(query);
+
+    return res.rows;
+}
+
 export async function get_user_password(client, email) {
     const query = `
         SELECT id, password FROM users WHERE email = $1

@@ -18,6 +18,19 @@ export async function getUser(req, res) {
     }
 }
 
+export async function getUsers(req, res) {
+    try {
+        const response = await services.getUsers();
+
+        res.json({response: response});
+    } catch (error) {
+        const errorMessage = errorUtils.errorMessages(error, req);
+
+        console.error(errorMessage);
+        res.json(errorMessage);
+    }
+}
+
 // Função de postar usuário
 export async function registerUser(req, res) {
     try {

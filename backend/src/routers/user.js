@@ -6,12 +6,17 @@ import * as controllers from '../controllers/user.js'
 
 const router = express.Router(); // Cria um router
 
-// Caso o método seja GET...
+// =========== MÉTODO GET ===========
 router.get('/:id', (req, res) => {
     controllers.getUser(req, res);
 });
 
-// Caso o método seja POST...
+router.get('/', (req, res) => {
+    controllers.getUsers(req, res);
+})
+
+// =========== MÉTODO POST ===========
+// ============== LOGIN ============== 
 router.post('/register', (req, res) => {
     controllers.registerUser(req, res);
 });
@@ -20,12 +25,12 @@ router.post('/login', (req, res) => {
     controllers.loginUser(req, res);
 })
 
-// Caso o método seja DELETE...
+// =========== MÉTODO DELETE ===========
 router.delete('/:id', (req, res) => {
     controllers.deleteUser(req, res);
 });
 
-// Caso o método seja PUT...
+// =========== MÉTODO PUT ===========
 router.put('/:id', (req, res) => {
     controllers.putUser(req, res);
 });

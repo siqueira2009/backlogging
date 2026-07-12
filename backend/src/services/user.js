@@ -20,6 +20,23 @@ export async function getUser(id) {
     }
 }
 
+export async function getUsers() {
+    let client;
+
+    try {
+        client = await pool.connect();
+        const users = await userQueries.get_users(client);
+
+        return users;
+    } catch (error) {
+        throw error;
+    } finally {
+        if (client) {
+            client.release();
+        }
+    }
+}
+
 // Função de postar usuário
 export async function registerUser(body) {
     const hashedPassword = await passwordUtils.hashPassword(body.password);
