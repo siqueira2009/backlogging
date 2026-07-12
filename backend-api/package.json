@@ -1,5 +1,5 @@
 {
-  "name": "backlogging-api",
+  "name": "backend-api",
   "version": "1.0.0",
   "description": "API responsável pela comunicação entre o back-end e o front-end",
   "homepage": "https://github.com/siqueira2009/backlogging#readme",

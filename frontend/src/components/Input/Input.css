@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+.input-group {
+    font-family: 'Manrope';
+    font-weight: 500;
+    width: 100%;
+    position: relative;
+    border-color: #1A233A 2px solid;
+}
+
+.input-group input {
+    font-family: 'Manrope';
+    font-weight: 500;
+    font-size: 18px;
+    padding: 0.8em;
+    outline: none;
+    border: 2px solid #1A233A;
+    background-color: transparent;
+    border-radius: 20px;
+    width: 100%;
+    color: white;
+}
+
+.input-group label {
+    font-size: 100%;
+    position: absolute;
+    left: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-50%) scale(.9);
+    margin: 0em;
+    margin-left: 1em;
+    padding: 0.4em;
+    background-color: #0C101A;
+}
