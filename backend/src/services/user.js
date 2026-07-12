@@ -1,20 +1,35 @@
 import pool from "../database/config.js";
 import * as userQueries from '../database/queries/user.js';
-
+import * as passwordUtils from '../utils/password.js';
 
 // Função de pegar usuário
-export function getUser(id) {
-    return `GET in /user with ID ${id}`;
+export async function getUser(id) {
+    let client;
+
+    try {
+        client = await pool.connect();
+        const user = await userQueries.get_user(client, id);
+
+        return user;
+    } catch (error) {
+        throw error;
+    } finally {
+        if (client) {
+            client.release();
+        }
+    }
 }
 
 // Função de postar usuário
 export async function postUser(body) {
+    const hashedPassword = await passwordUtils.hashPassword(body.password);
+    
     let client;
 
     const userData = {
         name: body.name,
         email: body.email,
-        password: body.password,
+        password: hashedPassword,
         steam_id: body.steam_id
     }
 
