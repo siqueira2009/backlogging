@@ -77,8 +77,8 @@ export async function deleteUser(req, res) {
 // Função de atualizar usuário
 export async function putUser(req, res) {
     try {
-        const id = req.params.id;
-        const response = await services.putUser(id);
+        const body = req.body;
+        const response = await services.putUser(body);
 
         res.json({response: response});
     } catch (error) {

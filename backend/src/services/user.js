@@ -130,6 +130,42 @@ export async function deleteUser(id) {
 }
 
 // Função de atualizar usuário
-export function putUser(id) {
-    return `PUT in /user with ID ${id}`
+export async function putUser(body) {
+    const hashedPassword = await passwordUtils.hashPassword(body.password);
+    
+    let client;
+
+    const userData = {
+        old_email: body.old_email,
+        name: body.name,
+        email: body.email,
+        password: hashedPassword,
+        steam_id: body.steam_id
+    }
+
+    try {
+        if (body.old_email == undefined || body.old_email == null) {
+            throw new Error("Missing old email");
+        }
+
+        client = await pool.connect();
+
+        await client.query('BEGIN');
+
+        const updated = await userQueries.update_user(client, userData);
+
+        await client.query('COMMIT');
+
+        return updated;
+    } catch (error) {
+        if (client) {
+            await client.query('ROLLBACK');
+        }
+
+        throw error;
+    } finally {
+        if (client) {
+            await client.release();
+        }
+    }
 }

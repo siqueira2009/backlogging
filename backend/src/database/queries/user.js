@@ -49,3 +49,16 @@ export async function delete_user(client, id) {
 
     return res.rowCount > 0;
 }
+
+export async function update_user(client, userData) {
+    const query = `
+        UPDATE users
+        SET name = $1, email = $2, password = $3, steam_id = $4
+        WHERE email = $5
+        RETURNING id
+    `
+
+    const res = await client.query(query, [userData.name, userData.email, userData.password, userData.steam_id, userData.old_email]);
+
+    return res.rowCount > 0;
+}

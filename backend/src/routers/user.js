@@ -31,7 +31,7 @@ router.delete('/:id', (req, res) => {
 });
 
 // =========== MÉTODO PUT ===========
-router.put('/:id', (req, res) => {
+router.put('/', (req, res) => {
     controllers.putUser(req, res);
 });
 
