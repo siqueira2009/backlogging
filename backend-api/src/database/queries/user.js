@@ -1,0 +1,10 @@
+export async function create_user(client, userData) {
+    const query = `
+        INSERT INTO users (name, email, password, steam_id) VALUES ($1, $2, $3, $4)
+        RETURNING id
+    `
+
+    const res = await client.query(query, [userData.name, userData.email, userData.password, userData.steam_id]);
+
+    return res.rows[0].id;
+}

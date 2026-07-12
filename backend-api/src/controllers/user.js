@@ -22,7 +22,8 @@ export async function getUser(req, res) {
 export async function postUser(req, res) {
     try {
         const body = req.body;
-        const response = await services.postUser();
+
+        const response = await services.postUser(body);
 
         res.json({response: response});
     } catch (error) {
