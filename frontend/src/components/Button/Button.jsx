@@ -1,8 +1,8 @@
 import './Button.css';
 
-export default function Button({text, action}) {
+export default function Button({type = "button", text, action}) {
     return (
-        <button id='customButton' onClick={action}>
+        <button type={type} id='customButton' onClick={action}>
             {text}
         </button>
     )

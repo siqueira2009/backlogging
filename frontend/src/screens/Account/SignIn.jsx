@@ -20,7 +20,7 @@ export default function SignIn() {
                 </div>
     
                 <div id="login-buttons">
-                    <Button text="Login" action={() => alert("Login")}/>
+                    <Button type="submit" text="Login" action={() => alert("Login")}/>
                     <NavLink style={{color: 'white', fontFamily: 'Manrope', fontWeight: 400}} to="/create">New here?</NavLink>
                 </div>
             </div>
