@@ -21,7 +21,7 @@ export async function getUser(id) {
 }
 
 // Função de postar usuário
-export async function postUser(body) {
+export async function registerUser(body) {
     const hashedPassword = await passwordUtils.hashPassword(body.password);
     
     let client;
@@ -52,6 +52,35 @@ export async function postUser(body) {
     } finally {
         if (client) {
             await client.release();
+        }
+    }
+}
+
+export async function loginUser(body) {
+    let client;
+
+    const userData = {
+        email: body.email,
+        password: body.password
+    }
+
+    try {
+        client = await pool.connect();
+
+        const databaseData = await userQueries.get_user_password(client, userData.email);
+
+        const isValid = await passwordUtils.comparePassword(userData.password, databaseData.password);
+
+        if (isValid) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        throw error;
+    } finally {
+        if (client) {
+            client.release();
         }
     }
 }

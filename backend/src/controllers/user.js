@@ -19,11 +19,25 @@ export async function getUser(req, res) {
 }
 
 // Função de postar usuário
-export async function postUser(req, res) {
+export async function registerUser(req, res) {
     try {
         const body = req.body;
 
-        const response = await services.postUser(body);
+        const response = await services.registerUser(body);
+
+        res.json({response: response});
+    } catch (error) {
+        const errorMessage = errorUtils.errorMessages(error, req);
+        console.error(errorMessage);
+        res.json(errorMessage);
+    }
+}
+
+export async function loginUser(req, res) {
+    try {
+        const body = req.body;
+
+        const response = await services.loginUser(body);
 
         res.json({response: response});
     } catch (error) {

@@ -12,9 +12,13 @@ router.get('/:id', (req, res) => {
 });
 
 // Caso o método seja POST...
-router.post('/', (req, res) => {
-    controllers.postUser(req, res);
+router.post('/register', (req, res) => {
+    controllers.registerUser(req, res);
 });
+
+router.post('/login', (req, res) => {
+    controllers.loginUser(req, res);
+})
 
 // Caso o método seja DELETE...
 router.delete('/:id', (req, res) => {
