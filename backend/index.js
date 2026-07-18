@@ -1,8 +1,10 @@
 // Importação de dependências
 import express from 'express';
+import * as dotenv from 'dotenv';
 
 // Importação de Routers
 import user from './src/routers/user.js'; 
+dotenv.config();
 
 const server = express(); // Cria o servidor Express
 

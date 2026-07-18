@@ -4,14 +4,17 @@ import express from 'express';
 // Importação dos controllers
 import * as controllers from '../controllers/user.js'
 
+// Importação de middlewares
+import authMiddleware from '../middlewares/auth.js';
+
 const router = express.Router(); // Cria um router
 
 // =========== MÉTODO GET ===========
-router.get('/:id', (req, res) => {
+router.get('/:id', authMiddleware, (req, res) => {
     controllers.getUser(req, res);
 });
 
-router.get('/', (req, res) => {
+router.get('/', authMiddleware, (req, res) => {
     controllers.getUsers(req, res);
 })
 
@@ -26,12 +29,12 @@ router.post('/login', (req, res) => {
 })
 
 // =========== MÉTODO DELETE ===========
-router.delete('/:id', (req, res) => {
+router.delete('/:id', authMiddleware, (req, res) => {
     controllers.deleteUser(req, res);
 });
 
 // =========== MÉTODO PUT ===========
-router.put('/', (req, res) => {
+router.put('/', authMiddleware, (req, res) => {
     controllers.putUser(req, res);
 });
 

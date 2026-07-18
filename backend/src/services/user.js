@@ -1,6 +1,7 @@
 import pool from "../database/config.js";
 import * as userQueries from '../database/queries/user.js';
 import * as passwordUtils from '../utils/password.js';
+import jwt from 'jsonwebtoken';
 
 // Função de pegar usuário
 export async function getUser(id) {
@@ -89,7 +90,13 @@ export async function loginUser(body) {
         const isValid = await passwordUtils.comparePassword(userData.password, databaseData.password);
 
         if (isValid) {
-            return true;
+            const token = jwt.sign(
+                {id: databaseData.id, email: databaseData.email},
+                process.env.JWT_SECRET,
+                {expiresIn: '7d'}
+            );
+
+            return {success: true, token};
         } else {
             return false;
         }
@@ -136,7 +143,6 @@ export async function putUser(body) {
     let client;
 
     const userData = {
-        old_email: body.old_email,
         name: body.name,
         email: body.email,
         password: hashedPassword,
