@@ -51,6 +51,10 @@ export async function registerUser(body) {
         steam_id: body.steam_id
     }
 
+    if (userData.name == null || userData.email == null || userData.password == null || userData.steam_id == null) {
+        throw new Error("Missing required fields.");
+    }
+
     try {
         client = await pool.connect();
 
@@ -60,7 +64,7 @@ export async function registerUser(body) {
 
         await client.query('COMMIT');
 
-        return userId;
+        return { success: true, id: userId };
     } catch (error) {
         if (client) {
             await client.query('ROLLBACK');
@@ -85,7 +89,9 @@ export async function loginUser(body) {
     try {
         client = await pool.connect();
 
-        const databaseData = await userQueries.get_user_password(client, userData.email);
+        const databaseData = await userQueries.get_user_password_by_email(client, userData.email);
+
+        if (!databaseData) return {success: false, error: "Can't get user data"}
 
         const isValid = await passwordUtils.comparePassword(userData.password, databaseData.password);
 
@@ -98,7 +104,7 @@ export async function loginUser(body) {
 
             return {success: true, token};
         } else {
-            return {success: false, };
+            return {success: false, error: "Invalid credentials" };
         }
     } catch (error) {
         throw error;
@@ -110,11 +116,23 @@ export async function loginUser(body) {
 }
 
 // Função de deletar usuário
-export async function deleteUser(id) {
+export async function deleteUser(body, id) {
     let client;
 
     try {
         client = await pool.connect();
+        
+        const current = await userQueries.get_user_password_by_id(client, id);
+
+        if (!current) {
+            throw new Error("User not found.");
+        }
+
+        const isValid = await passwordUtils.comparePassword(body.password, current.password);
+
+        if (!isValid) {
+            throw new Error("Incorrect password.");
+        }
 
         await client.query('BEGIN');
 
@@ -172,7 +190,7 @@ export async function putUser(body, id) {
             id,
             name: body.name,
             email: body.email,
-            password: body.password ?? current.password
+            password: newPassword ?? current.password
         }
 
         // Muda no banco de dados

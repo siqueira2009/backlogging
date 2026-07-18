@@ -8,6 +8,10 @@ export async function getUser(req, res) {
         const id = req.params.id; // Pegar o ID dos parâmetros
         const response = await services.getUser(id); // Esperar resposta dos serviços
 
+        if (!response || response.length == 0) {
+            return res.status(404).json({error: "No users found."});
+        }
+
         res.status(200).json({response: response}); // Devolver essa resposta
     } catch (error) { // Em caso de erro...
         const errorMessage = errorUtils.errorMessages(error, req); // Gera mensagem de erro usando a função utilitária
@@ -21,6 +25,10 @@ export async function getUser(req, res) {
 export async function getUsers(req, res) {
     try {
         const response = await services.getUsers();
+
+        if (!response || response.length == 0) {
+            return res.status(404).json({error: "User not found."});
+        }
 
         res.status(200).json({response: response});
     } catch (error) {
@@ -38,6 +46,10 @@ export async function registerUser(req, res) {
 
         const response = await services.registerUser(body);
 
+        if (!response.success) {
+            return res.status(400).json({error: "Impossible to register user."});
+        }
+
         res.status(200).json({response: response});
     } catch (error) {
         const errorMessage = errorUtils.errorMessages(error, req);
@@ -52,8 +64,8 @@ export async function loginUser(req, res) {
 
         const response = await services.loginUser(body);
 
-        if (!response) {
-            return res.status(401).json({error: "Invalid credentials."})
+        if (!response.success) {
+            return res.status(401).json({error: "Impossible to login user."});
         }
 
         res.status(200).json({response: response});
@@ -67,8 +79,13 @@ export async function loginUser(req, res) {
 // Função de deletar usuário
 export async function deleteUser(req, res) {
     try {
-        const id = req.params.id;
-        const response = await services.deleteUser(id);
+        const id = req.user.id;
+        const body = req.body;
+        const response = await services.deleteUser(body, id);
+
+        if (!response) {
+            return res.status(400).json({error: "Impossible to delete user."});
+        }
 
         res.status(200).json({response: response});
     } catch (error) {
@@ -84,6 +101,10 @@ export async function putUser(req, res) {
         const id = req.user.id;
         const body = req.body;
         const response = await services.putUser(body, id);
+
+        if (!response) {
+            return res.status(400).json({error: "Impossible to delete user."});
+        }
 
         res.status(200).json({response: response});
     } catch (error) {

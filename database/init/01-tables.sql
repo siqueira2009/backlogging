@@ -10,5 +10,5 @@ CREATE TABLE users (
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     gametype INTEGER REFERENCES playertypes,
-    steam_id FLOAT NOT NULL
+    steam_id BIGINT NOT NULL
 );
