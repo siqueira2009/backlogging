@@ -18,11 +18,39 @@ export async function getUser(req, res) {
     }
 }
 
+export async function getUsers(req, res) {
+    try {
+        const response = await services.getUsers();
+
+        res.json({response: response});
+    } catch (error) {
+        const errorMessage = errorUtils.errorMessages(error, req);
+
+        console.error(errorMessage);
+        res.json(errorMessage);
+    }
+}
+
 // Função de postar usuário
-export async function postUser(req, res) {
+export async function registerUser(req, res) {
     try {
         const body = req.body;
-        const response = await services.postUser();
+
+        const response = await services.registerUser(body);
+
+        res.json({response: response});
+    } catch (error) {
+        const errorMessage = errorUtils.errorMessages(error, req);
+        console.error(errorMessage);
+        res.json(errorMessage);
+    }
+}
+
+export async function loginUser(req, res) {
+    try {
+        const body = req.body;
+
+        const response = await services.loginUser(body);
 
         res.json({response: response});
     } catch (error) {
@@ -36,7 +64,7 @@ export async function postUser(req, res) {
 export async function deleteUser(req, res) {
     try {
         const id = req.params.id;
-        const response = services.deleteUser(id);
+        const response = await services.deleteUser(id);
 
         res.json({response: response});
     } catch (error) {
@@ -49,8 +77,8 @@ export async function deleteUser(req, res) {
 // Função de atualizar usuário
 export async function putUser(req, res) {
     try {
-        const id = req.params.id;
-        const response = services.putUser(id);
+        const body = req.body;
+        const response = await services.putUser(body);
 
         res.json({response: response});
     } catch (error) {

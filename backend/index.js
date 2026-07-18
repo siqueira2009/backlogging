@@ -6,6 +6,8 @@ import user from './src/routers/user.js';
 
 const server = express(); // Cria o servidor Express
 
+server.use(express.json());
+
 server.use('/user', user); // Coloca tudo da rota /user para o Router de usuário
 
 // Coloca o servidor para ouvir
